@@ -1,0 +1,6 @@
+[submodule "files/SD-VehicleInterface"]
+	path = files/SD-VehicleInterface
+	url = https://github.com/Monash-Connected-Autonomous-Vehicle/SD-VehicleInterface.git
+[submodule "files/ros2_socketcan"]
+	path = files/ros2_socketcan
+	url = https://github.com/autowarefoundation/ros2_socketcan.git
