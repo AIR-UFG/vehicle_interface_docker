@@ -102,6 +102,7 @@ docker run -it \
   -v "/tmp/.X11-unix:/tmp/.X11-unix" \
   -v "${SHARED_DIR}:/root/shared-folder" \
   --network=host \
+  --name "vehicle_interface"
   $DOCKER_OPTS \
   $IMG
 
