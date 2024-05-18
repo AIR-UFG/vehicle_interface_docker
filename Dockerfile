@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     nano \
     ros-humble-can-msgs \
     ros-humble-teleop-twist-keyboard \
+    ros-humble-velodyne* \
     can-utils \
     iproute2 && \
     rm -rf /var/lib/apt/lists/*
@@ -26,6 +27,7 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash; colcon build"
 # and create an alias for the keyboardlaunch script and the vehicle_interface launch file
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
     echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc && \
+    echo "alias lidar='ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py'" >> /root/.bashrc && \
     echo "alias vi_launch='ros2 launch sd_vehicle_interface sd_vehicle_interface.launch.xml sd_vehicle:=twizy sd_gps_imu:=peak'" >> /root/.bashrc
 
 # Set the working directory to the root folder
