@@ -42,3 +42,9 @@ To start the Vehicle Interface, run the following command within the container:
 ```bash
 ros2 launch sd_vehicle_interface sd_vehicle_interface.launch.xml sd_vehicle:=twizy sd_gps_imu:=peak
 ```
+
+If you need to attach to the container's shell, run the following command:
+
+```bash
+docker exec -it vehicle_interface bash
+```
