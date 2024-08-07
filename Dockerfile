@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     nano \
+    python3-pip \
     ros-humble-can-msgs \
     ros-humble-teleop-twist-keyboard \
     ros-humble-velodyne* \
@@ -23,12 +24,18 @@ WORKDIR /root/ros2_ws
 # Build the Colcon workspace
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash; colcon build"
 
+# Install cantools for can message decoding and visualization
+RUN python3 -m pip install cantools
+# Copy the streetdrone .dbc file
+COPY files/streetdrone_can.dbc /root/can/streetdrone_can.dbc
+
 # Source the ROS environment and the Colcon workspace in the entry point
 # and create an alias for the keyboardlaunch script and the vehicle_interface launch file
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
     echo "source /root/ros2_ws/install/setup.bash" >> /root/.bashrc && \
     echo "alias lidar='ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py'" >> /root/.bashrc && \
-    echo "alias vi_launch='ros2 launch sd_vehicle_interface sd_vehicle_interface.launch.xml sd_vehicle:=twizy sd_gps_imu:=peak'" >> /root/.bashrc
+    echo "alias vi_launch='ros2 launch sd_vehicle_interface sd_vehicle_interface.launch.xml sd_vehicle:=twizy sd_gps_imu:=peak'" >> /root/.bashrc && \
+    echo "alias canmonitor='cantools monitor /root/can/streetdrone_can.dbc'" >> /root/.bashrc
 
 # Set the working directory to the root folder
 WORKDIR /root
